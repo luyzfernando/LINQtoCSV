@@ -1,4 +1,4 @@
-# LINQtoCSV
+# LINQtoCSVtoDotNETCore
 
 This library makes it easy to use CSV files with LINQ queries. Its features include:
 

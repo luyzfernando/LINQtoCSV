@@ -19,7 +19,7 @@ namespace SampleCode
             // Simple Read example
 
             CsvContext cc = new CsvContext();
-
+            
             CsvFileDescription inputFileDescription = new CsvFileDescription
             {
                 SeparatorChar = ',', 

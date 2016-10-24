@@ -84,8 +84,8 @@ namespace LINQtoCSV
                     CsvFileDescription fileDescription) where T : class, new()
         {
             // If T implements IDataRow, then we're reading raw data rows 
-            bool readingRawDataRows = typeof(IDataRow).IsAssignableFrom(typeof(T));
-
+            bool readingRawDataRows = true;//typeof(IDataRow).IsAssignableFrom(typeof(T));
+                //TODO: 232
             // The constructor for FieldMapper_Reading will throw an exception if there is something
             // wrong with type T. So invoke that constructor before you open the file, because if there
             // is an exception, the file will not be closed.
@@ -109,10 +109,9 @@ namespace LINQtoCSV
 
             if (readingFile)
             {
-                stream = new StreamReader(
-                                    fileName, 
-                                    fileDescription.TextEncoding,
-                                    fileDescription.DetectEncodingFromByteOrderMarks);
+                FileStream fileStream = new FileStream(fileName,FileMode.Open);
+
+                stream = new StreamReader(fileStream);
             }
             else
             {
@@ -209,7 +208,8 @@ namespace LINQtoCSV
             {
                 if (readingFile)
                 {
-                    stream.Close();
+                    // stream.Close();
+                    //TODO: 123
                 }
 
                 // If any exceptions were raised while reading the data from the file,
@@ -227,10 +227,9 @@ namespace LINQtoCSV
             string fileName, 
             CsvFileDescription fileDescription) 
         {
-            using (StreamWriter sw = new StreamWriter(
-                                                fileName,
-                                                false,
-                                                fileDescription.TextEncoding))
+            FileStream fileStream = new FileStream(fileName,FileMode.CreateNew);
+
+            using (StreamWriter sw = new StreamWriter(fileStream))
             {
                 WriteData<T>(values, fileName, sw, fileDescription);
             }
